@@ -8,10 +8,12 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import Navbar from "@/components/navbar";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      <Navbar />
       <div className="container mx-auto px-4 py-16 lg:py-24">
         <div className="max-w-6xl mx-auto">
           {/* Main Hero Content */}
