@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
 
   // Check for better-auth session cookie
   const sessionToken = request.cookies.get("better-auth.session_token");
-  
+
   if (!sessionToken) {
     const url = new URL("/signin", request.url);
     url.searchParams.set("redirect", pathname);
