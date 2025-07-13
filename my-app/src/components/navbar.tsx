@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<{ user: { id: string; name: string; email: string } } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 

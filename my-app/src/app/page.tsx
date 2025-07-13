@@ -142,8 +142,8 @@ export default function Home() {
                 <div className="bg-slate-50 dark:bg-slate-700 rounded-lg p-4">
                   <div className="space-y-3">
                     <div className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 p-3 rounded-lg text-sm">
-                      "What are the key findings in the research paper about
-                      climate change?"
+                      &quot;What are the key findings in the research paper about
+                      climate change?&quot;
                     </div>
                     <div className="bg-white dark:bg-slate-600 p-3 rounded-lg text-sm text-slate-700 dark:text-slate-300">
                       Based on your uploaded research, the key findings include
