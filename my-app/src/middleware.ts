@@ -1,19 +1,20 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/utils/auth";
+import type { NextRequest } from "next/server";
 
 const protectedPaths = ["/dashboard", "/dashboard/*", "/chat"];
 
-export async function middleware(request: Request) {
-  const { pathname } = new URL(request.url);
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
   const isProtected = protectedPaths.some(
     (p) => pathname === p || pathname.startsWith(p.replace("/*", ""))
   );
 
   if (!isProtected) return NextResponse.next();
 
-  const session = await auth.api.getSession({ headers: request.headers });
-
-  if (!session) {
+  // Check for better-auth session cookie
+  const sessionToken = request.cookies.get("better-auth.session_token");
+  
+  if (!sessionToken) {
     const url = new URL("/signin", request.url);
     url.searchParams.set("redirect", pathname);
     return NextResponse.redirect(url);
