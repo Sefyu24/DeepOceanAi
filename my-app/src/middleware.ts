@@ -12,7 +12,9 @@ export function middleware(request: NextRequest) {
   if (!isProtected) return NextResponse.next();
 
   // Check for better-auth session cookie
-  const sessionToken = request.cookies.get("better-auth.session_token");
+  const sessionToken = request.cookies.get(
+    "__Secure-better-auth.session_token"
+  );
 
   if (!sessionToken) {
     const url = new URL("/signin", request.url);
