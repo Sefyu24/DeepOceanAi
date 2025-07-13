@@ -62,37 +62,37 @@ export default function Dashboard() {
     if (!selectedFile) return;
 
     setIsUploading(true);
-    
+
     try {
       // Read file content
       const fileContent = await selectedFile.text();
-      
+
       // Create FormData or JSON payload
-      const response = await fetch('/api/documents/upload', {
-        method: 'POST',
+      const response = await fetch("/api/documents/upload", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          title: selectedFile.name.replace('.md', ''),
+          title: selectedFile.name.replace(".md", ""),
           content: fileContent,
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Upload failed');
+        throw new Error("Upload failed");
       }
 
       const result = await response.json();
-      alert("File uploaded successfully!");
-      
+      alert(result.message || "Upload completed successfully!");
+
       // Reset after upload
       setSelectedFile(null);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
     } catch (error) {
-      console.error('Upload error:', error);
+      console.error("Upload error:", error);
       alert("Upload failed. Please try again.");
     } finally {
       setIsUploading(false);
@@ -223,7 +223,7 @@ export default function Dashboard() {
             {/* Instructions */}
             <div className="mt-8 text-center">
               <p className="text-sm text-slate-500 dark:text-slate-400">
-                Once uploaded, you'll be able to chat with your research
+                Once uploaded, you&apos;ll be able to chat with your research
                 documents using our AI assistant
               </p>
             </div>

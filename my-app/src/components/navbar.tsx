@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { authClient } from "@/lib/auth-client";
 import {
   Menu,
@@ -164,6 +164,7 @@ export default function Navbar() {
                 side="right"
                 className="w-80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md"
               >
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <div className="flex flex-col gap-6 mt-8">
                   {/* Mobile Logo */}
                   <div className="flex items-center gap-2 pb-4 border-b border-slate-200 dark:border-slate-700">

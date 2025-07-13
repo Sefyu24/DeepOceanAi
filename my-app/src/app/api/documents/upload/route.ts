@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
-import { researchDocs } from "@/utils/schema";
+import { docChunks, researchDocs } from "@/utils/schema";
 import { auth } from "@/utils/auth";
+import { splitMarkdown } from "@/lib/splitMD";
+import { createEmbeddings } from "@/lib/embeddings";
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,9 +34,35 @@ export async function POST(request: NextRequest) {
 
     const insertedDoc = result[0];
 
+    // now separate document in multiple chunks and add them to doc_chunks table
+
+    const docId = insertedDoc.id;
+    const chunks = splitMarkdown(insertedDoc.content);
+    //prepare the embedding using OpenAi
+    const textToEmbed = chunks.map((chunk) => chunk.text);
+    const embeddings = await createEmbeddings(textToEmbed);
+
+    for (let i = 0; i < chunks.length; i++) {
+      const chunk = chunks[i];
+
+      const resultChunks = await db
+        .insert(docChunks)
+        .values({
+          docId: docId,
+          content: chunk.text,
+          tokens: chunk.tokens,
+          idx: i,
+          embedding: embeddings[i],
+          chunkType: chunk.type,
+        })
+        .returning();
+
+      console.log("Results of chunk insert", resultChunks);
+    }
+
     return NextResponse.json({
       success: true,
-      message: "Document was uploaded!",
+      message: "Document was uploaded!, and chunks were created",
       document: {
         id: insertedDoc.id,
         title: insertedDoc.title,
