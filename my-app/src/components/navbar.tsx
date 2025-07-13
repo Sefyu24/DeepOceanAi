@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { authClient } from "@/lib/auth-client";
 import {
   Menu,
-  Brain,
+  Waves,
   FileText,
   MessageCircle,
   Settings,
@@ -67,10 +67,10 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <Brain className="w-5 h-5 text-white" />
+              <Waves className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              ResearchAI
+              Deep Ocean
             </span>
           </div>
 
@@ -169,10 +169,10 @@ export default function Navbar() {
                   {/* Mobile Logo */}
                   <div className="flex items-center gap-2 pb-4 border-b border-slate-200 dark:border-slate-700">
                     <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                      <Brain className="w-5 h-5 text-white" />
+                      <Waves className="w-5 h-5 text-white" />
                     </div>
                     <span className="text-xl font-bold text-slate-900 dark:text-slate-100">
-                      ResearchAI
+                      Deep Ocean
                     </span>
                   </div>
 
@@ -193,19 +193,55 @@ export default function Navbar() {
 
                   {/* Mobile CTA Buttons */}
                   <div className="flex flex-col gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
-                    <Button
-                      variant="outline"
-                      className="w-full justify-center bg-transparent"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Sign In
-                    </Button>
-                    <Button
-                      className="w-full justify-center bg-blue-600 hover:bg-blue-700 text-white"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Get Started
-                    </Button>
+                    {isLoading ? (
+                      <div className="w-full h-10 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+                    ) : session ? (
+                      <>
+                        <Button
+                          onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            router.push("/dashboard");
+                          }}
+                          variant="outline"
+                          className="w-full justify-center bg-transparent"
+                        >
+                          Dashboard
+                        </Button>
+                        <Button
+                          onClick={async () => {
+                            await authClient.signOut();
+                            setSession(null);
+                            setIsMobileMenuOpen(false);
+                            router.push("/");
+                          }}
+                          className="w-full justify-center bg-red-600 hover:bg-red-700 text-white"
+                        >
+                          Sign Out
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            router.push("/signin");
+                          }}
+                          variant="outline"
+                          className="w-full justify-center bg-transparent"
+                        >
+                          Sign In
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            router.push("/signin");
+                          }}
+                          className="w-full justify-center bg-blue-600 hover:bg-blue-700 text-white"
+                        >
+                          Get Started
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </div>
               </SheetContent>

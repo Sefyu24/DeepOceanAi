@@ -46,12 +46,6 @@ export function SignupForm({
               <Github className="mr-2 h-4 w-4" />
               Login with GitHub
             </Button>
-            <div className="text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <a href="#" className="underline underline-offset-4">
-                Sign up
-              </a>
-            </div>
           </div>
         </CardContent>
       </Card>
