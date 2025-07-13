@@ -1,55 +1,37 @@
-# DeepOcean AI
-*Interact with your deep research and connect insights across documents*
+# DeepOceanAi
+Interact with your deep research and create links between them
 
----
+This project was created to gain a better understanding of how LLMs work. I haven't played much in the past with the OpenAI API, so I figured that this quick and simple project would give me the opportunity to learn more about it.
 
-## Overview
-This project is a sandbox to deepen my understanding of large-language models (LLMs). I’d had little hands-on experience with the OpenAI API, so I built a small, focused application to explore its capabilities.
+I was also excited to test technologies I hadn't had the opportunity to play with yet, like **Better Auth** and **Drizzle ORM**.
 
-It also gave me the chance to experiment with technologies I hadn’t tried yet—namely **Better Auth** and **Drizzle ORM**.
+### Better Auth
+As someone with a background in Security Engineering and expertise in the IAM field, I found what Better Auth proposed interesting. Integrating authentication and dealing with authorization was super simple, and I was surprised at how well the documentation is structured. I will be using Better Auth for future projects when dealing with auth.
 
----
+### Drizzle ORM
+One of the things I enjoy less in web development is constantly jumping back and forth from my IDE to my browser and other applications. When I read that Drizzle would give me the opportunity to work in my database directly from my codebase, I was excited to try it!
 
-## Better Auth
-Coming from a security-engineering and IAM background, I was intrigued by what Better Auth offers. Integrating authentication and authorization was refreshingly straightforward, and the documentation is exceptionally well-structured. I’ll definitely reach for Better Auth in future projects that require auth.
+And wow, it really didn't disappoint :)
 
----
+I was able to generate my DB schema and migrate it directly from my codebase, and Drizzle worked perfectly with Better Auth. This made the experience 10× better, and I see it as a great tool for bigger projects.
 
-## Drizzle ORM
-One thing I enjoy least in web development is constantly switching between my IDE, browser, and database tools. Drizzle lets me interact with the database directly from my codebase, and it delivered on that promise.
+### Challenges
+What I realized when it was time to deal with the files is that there is a limit to the number of tokens we can embed at once using the OpenAI API. I had to find a workaround and create a function that would split the text into multiple chunks and embed each separately. This gave me the opportunity to use other libraries, like **tiktoken**, to count the correct number of tokens and make sure that each chunk would not be larger than the OpenAI token limit.
 
-I generated the database schema and ran migrations entirely from code, and Drizzle worked seamlessly alongside Better Auth. The developer experience was **10 ×** better, and I can see Drizzle scaling nicely for larger projects.
+Another challenge was retrieving the most accurate chunks to answer the user's questions. For the purpose of this project, I used the simplest approach and compared the embeddings of each chunk to the embeddings of the question (I had to get the embeddings for the user's question first, of course).
 
----
+The issues with this method are that:
 
-## Challenges
+- The more files the user uploads, the longer it will take to compare all of the chunks and select the ones that are closely related to the research.
+- It's hard to find the right number of chunks to add to the context without giving too little information to the LLM.
 
-### 1. Token limits
-The OpenAI API imposes a limit on the number of tokens that can be embedded at once. To stay within that limit, I wrote a utility that:
+In the future, I would love to explore other ways to optimize this tool by using binary trees and indexes. This would make the searches quicker and provide better context to the LLM for the answers.
 
-1. Splits text into manageable chunks  
-2. Counts tokens with **tiktoken**  
-3. Embeds each chunk separately  
+List of tools I used for this project:
 
-### 2. Chunk retrieval
-Accurate answers require selecting the most relevant chunks:
-
-1. Embed the user’s query  
-2. Compute similarity against embeddings for every chunk  
-3. Choose the *n* closest chunks as context  
-
-Drawbacks of this naïve approach:
-
-- As the dataset grows, comparing every chunk becomes slower  
-- Picking *n* is tricky—too few chunks starve the model of context; too many waste tokens  
-
-I’d like to explore indexing strategies (e.g., binary trees or vector databases) to speed up similarity search and deliver richer context.
-
----
-
-## Tech Stack
-- **Next.js**  
-- **PostgreSQL** (hosted on **Neon**)  
-- **Better Auth**  
-- **Drizzle ORM**  
+- **Next.js**
+- **PostgreSQL**
+- **Neon**
+- **Better Auth**
+- **Drizzle ORM**
 - **OpenAI API**
