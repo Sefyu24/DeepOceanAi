@@ -14,7 +14,7 @@ export async function middleware(request: Request) {
   const session = await auth.api.getSession({ headers: request.headers });
 
   if (!session) {
-    const url = new URL("/login", request.url);
+    const url = new URL("/signin", request.url);
     url.searchParams.set("redirect", pathname);
     return NextResponse.redirect(url);
   }

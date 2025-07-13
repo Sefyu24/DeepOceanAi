@@ -134,7 +134,7 @@ export default function Navbar() {
                   Sign In
                 </Button>
                 <Button
-                  onClick={() => router.push("/signup")}
+                  onClick={() => router.push("/signin")}
                   className="bg-blue-600 hover:bg-blue-700 text-white"
                 >
                   Get Started
