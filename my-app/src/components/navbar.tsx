@@ -49,7 +49,7 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Features", href: "#features", icon: FileText },
-    { name: "Chat AI", href: "#chat", icon: MessageCircle },
+    { name: "Chat AI", href: "/chat", icon: MessageCircle },
     { name: "Pricing", href: "#pricing", icon: Settings },
     { name: "About", href: "#about", icon: User },
   ];
@@ -123,7 +123,7 @@ export default function Navbar() {
             ) : (
               <>
                 <Button
-                  onClick={() => router.push("/login")}
+                  onClick={() => router.push("/signin")}
                   variant="ghost"
                   className={`transition-colors ${
                     isScrolled

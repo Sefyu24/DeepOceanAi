@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/utils/auth";
 
-const protectedPaths = ["/dashboard", "/dashboard/*"];
+const protectedPaths = ["/dashboard", "/dashboard/*", "/chat"];
 
 export async function middleware(request: Request) {
   const { pathname } = new URL(request.url);
@@ -23,5 +23,5 @@ export async function middleware(request: Request) {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/dashboard/:path*"],
+  matcher: ["/dashboard", "/dashboard/:path*", "/chat"],
 };
