@@ -19,19 +19,6 @@ export async function middleware(request: NextRequest) {
     ? "__Secure-better-auth.session_token"
     : "better-auth.session_token";
 
-  // Debug: log all cookies and environment info
-  console.log(
-    `[Middleware Debug] Environment: ${
-      isProduction ? "PRODUCTION" : "DEVELOPMENT"
-    }`
-  );
-  console.log(`[Middleware Debug] Protocol: ${request.nextUrl.protocol}`);
-  console.log(`[Middleware Debug] Looking for cookie: ${cookieName}`);
-  console.log(
-    `[Middleware Debug] All cookies:`,
-    Object.fromEntries(request.cookies.getAll().map((c) => [c.name, c.value]))
-  );
-
   const sessionToken = request.cookies.get(cookieName);
   const fallbackToken = request.cookies.get(
     isProduction
@@ -40,16 +27,10 @@ export async function middleware(request: NextRequest) {
   );
 
   if (!sessionToken && !fallbackToken) {
-    console.log(`[Middleware Debug] No session cookie found`);
     const url = new URL("/signin", request.url);
     url.searchParams.set("redirect", pathname);
     return NextResponse.redirect(url);
   }
-
-  const activeToken = sessionToken || fallbackToken;
-  console.log(
-    `[Middleware Debug] Found token: ${activeToken?.value ? "YES" : "NO"}`
-  );
 
   // Validate the session token by calling the better-auth session endpoint
   try {
@@ -61,24 +42,18 @@ export async function middleware(request: NextRequest) {
     });
 
     if (!response.ok) {
-      console.log("Session invalid, status:", response.status);
       const url = new URL("/signin", request.url);
       url.searchParams.set("redirect", pathname);
       return NextResponse.redirect(url);
     }
 
     const session = await response.json();
-    console.log("Session response:", session);
     
-    // Better Auth returns the user directly, not nested in .data
     if (!session?.user) {
-      console.log("No user found in session");
       const url = new URL("/signin", request.url);
       url.searchParams.set("redirect", pathname);
       return NextResponse.redirect(url);
     }
-
-    console.log("User authenticated successfully:", session.user.email);
 
     return NextResponse.next();
   } catch (error) {

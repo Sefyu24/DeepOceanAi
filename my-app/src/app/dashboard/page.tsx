@@ -112,27 +112,27 @@ export default function Dashboard() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 pt-20">
+      <div className="min-h-screen bg-gradient-to-br from-background to-muted pt-20">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="text-center mb-8">
-              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Upload Your Research
               </h1>
-              <p className="text-lg text-slate-600 dark:text-slate-300">
+              <p className="text-lg text-muted-foreground">
                 Upload your Markdown files to start analyzing and chatting with
                 your research documents
               </p>
             </div>
 
             {/* Upload Area */}
-            <Card className="p-8 border-2 border-dashed border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-800/50 backdrop-blur">
+            <Card className="p-8 border-2 border-dashed border-border bg-card/50 backdrop-blur">
               <div
                 className={`relative transition-all duration-200 ${
                   isDragOver
-                    ? "bg-blue-50 dark:bg-blue-950 border-blue-300 dark:border-blue-600"
-                    : "hover:bg-slate-50 dark:hover:bg-slate-700"
+                    ? "bg-primary/10 border-primary/30"
+                    : "hover:bg-muted/50"
                 } border-2 border-dashed rounded-lg p-12 cursor-pointer`}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -151,30 +151,30 @@ export default function Dashboard() {
                   <div
                     className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center ${
                       isDragOver
-                        ? "bg-blue-100 dark:bg-blue-900"
-                        : "bg-slate-100 dark:bg-slate-700"
+                        ? "bg-primary/10"
+                        : "bg-muted"
                     }`}
                   >
                     <Upload
                       className={`w-8 h-8 ${
                         isDragOver
-                          ? "text-blue-600 dark:text-blue-400"
-                          : "text-slate-500 dark:text-slate-400"
+                          ? "text-primary"
+                          : "text-muted-foreground"
                       }`}
                     />
                   </div>
 
-                  <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">
                     {isDragOver
                       ? "Drop your file here"
                       : "Upload Markdown File"}
                   </h3>
 
-                  <p className="text-slate-600 dark:text-slate-300 mb-4">
+                  <p className="text-muted-foreground mb-4">
                     Drag and drop your .md file here, or click to browse
                   </p>
 
-                  <div className="text-sm text-slate-500 dark:text-slate-400">
+                  <div className="text-sm text-muted-foreground">
                     Supported format: .md (Markdown)
                   </div>
                 </div>
@@ -183,17 +183,17 @@ export default function Dashboard() {
 
             {/* Selected File Display */}
             {selectedFile && (
-              <Card className="mt-6 p-6 bg-white dark:bg-slate-800">
+              <Card className="mt-6 p-6 bg-card">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
-                      <FileText className="w-6 h-6 text-green-600 dark:text-green-400" />
+                    <div className="w-12 h-12 bg-chart-2/10 rounded-lg flex items-center justify-center">
+                      <FileText className="w-6 h-6 text-chart-2" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-slate-900 dark:text-slate-100">
+                      <h4 className="font-medium text-foreground">
                         {selectedFile.name}
                       </h4>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">
+                      <p className="text-sm text-muted-foreground">
                         {formatFileSize(selectedFile.size)} • Markdown file
                       </p>
                     </div>
@@ -204,14 +204,14 @@ export default function Dashboard() {
                       variant="outline"
                       size="sm"
                       onClick={handleRemoveFile}
-                      className="text-slate-600 dark:text-slate-400 bg-transparent"
+                      className="text-muted-foreground bg-transparent border-border"
                     >
                       <X className="w-4 h-4" />
                     </Button>
                     <Button
                       onClick={handleUpload}
                       disabled={isUploading}
-                      className="bg-blue-600 hover:bg-blue-700"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground"
                     >
                       {isUploading ? "Uploading..." : "Upload File"}
                     </Button>
@@ -222,7 +222,7 @@ export default function Dashboard() {
 
             {/* Instructions */}
             <div className="mt-8 text-center">
-              <p className="text-sm text-slate-500 dark:text-slate-400">
+              <p className="text-sm text-muted-foreground">
                 Once uploaded, you&apos;ll be able to chat with your research
                 documents using our AI assistant
               </p>

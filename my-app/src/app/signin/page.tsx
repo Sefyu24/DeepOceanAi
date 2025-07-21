@@ -6,7 +6,7 @@ export default function SigninPage() {
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white flex size-8 items-center justify-center rounded-lg">
+          <div className="bg-gradient-to-r from-primary to-chart-5 text-primary-foreground flex size-8 items-center justify-center rounded-lg">
             <Waves className="size-5" />
           </div>
           Deep Ocean
